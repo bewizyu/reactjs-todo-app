@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
 import {AppBar} from 'material-ui';
-import {TodoContainer} from './todos/TodoContainer';
+// import TodoContainer from './todos/TodoContainer.synchrone';
+import TodoContainer from './todos/TodoContainer.asynchrone';
 
 class App extends Component {
   render() {

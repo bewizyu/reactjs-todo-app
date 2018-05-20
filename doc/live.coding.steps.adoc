@@ -1,0 +1,44 @@
+= Live Coding Redux - Thunk
+
+== Dépendances
+
+[source, shell]
+----
+    yarn add react-redux redux redux-logger prop-types redux-thunk
+----
+
+== Actions synchrones
+
+=== Steps
+
+- Création des actions
+
+[source, js]
+----
+include::../src/todos/store-synchrones/todos.actions.js[]
+----
+
+- Création des reducers
+
+[source, js]
+----
+include::../src/todos/store-synchrones/todos.reducer.js[]
+----
+
+== Actions asynchrones
+
+=== Steps
+
+- Création des actions
+
+[source, js]
+----
+include::../src/todos/store-asynchrones/todos.actions.js[]
+----
+
+- Création des reducers
+
+[source, js]
+----
+include::../src/todos/store-asynchrones/todos.reducer.js[]
+----
