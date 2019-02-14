@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TodoList} from './TodoList';
-import {TodoForm} from './TodoForm';
 import TodoContext from './TodoContext';
+import {TodoForm} from './TodoForm';
 
 const mockList = [
   {
@@ -23,56 +23,41 @@ const mockList = [
   },
 ]
 
-export class TodoContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.updateTodo = this.updateTodo.bind(this);
-    this.addTodo = this.addTodo.bind(this);
-    this.removeTodos = this.removeTodos.bind(this);
-    this.state = {
-      todos: mockList,
-      addTodo: this.addTodo,
-      removeTodos: this.removeTodos,
-      updateTodo: this.updateTodo,
-    }
-  }
+export function TodoContainer() {
+  const [todos, setTodos] = useState(mockList);
   
-  addTodo(title) {
-    this.setState((prevState) => ({
-      todos: [...prevState.todos, {
-        id: prevState.todos.length + 1,
+  function addTodo(title) {
+    setTodos([...todos, {
+        id: todos.length + 1,
         title,
         isDone: false
       }
       ],
-    }));
+    )
   }
   
-  removeTodos() {
-    this.setState(() => ({
-      todos: [],
-    }));
+  function removeTodos() {
+    setTodos([])
   }
   
-  updateTodo(todo) {
+  function updateTodo(todo) {
     // Find todo to update in the todos list
-    const updateTodo = this.state.todos.find(item => item.id === todo.id);
+    const updateTodo = todos.find(item => item.id === todo.id);
     updateTodo.isDone = !updateTodo.isDone;
-    // Filter other Todos
-    const others = this.state.todos.filter(item => item.id !== todo.id);
-    this.setState((prevState, props) => ({
-      todos: [...others, updateTodo].sort((a, b) => a.id - b.id),
-    }));
+    setTodos([...todos.filter(item => item.id !== todo.id), updateTodo].sort((a, b) => a.id - b.id));
   }
   
-  render() {
-    return (
-      <TodoContext.Provider value={this.state}>
-        <div>
-          <TodoForm />
-          <TodoList todos={this.state.todos} />
-        </div>
-      </TodoContext.Provider>
-    );
-  }
+  return (
+    <TodoContext.Provider value={{
+      todos,
+      addTodo,
+      removeTodos,
+      updateTodo,
+    }}>
+      <div>
+        <TodoForm />
+        <TodoList />
+      </div>
+    </TodoContext.Provider>
+  );
 }
